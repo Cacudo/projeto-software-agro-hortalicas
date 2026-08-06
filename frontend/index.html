@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Agro-Hortaliças</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🥦 Gestão de Hortaliças</h1>
+
+        <div class="dashboard">
+            <div class="card card-estoque">
+                <h3>Estoque Atual</h3>
+                <p id="cardEstoque">0 Kg</p>
+            </div>
+            <div class="card card-lucro">
+                <h3>Faturamento Total</h3>
+                <p id="cardLucro">R$ 0.00</p>
+            </div>
+            <div class="card card-perdas">
+                <h3>Total de Perdas</h3>
+                <p id="cardPerdas">0 Kg</p>
+            </div>
+        </div>
+
+        <form id="formAgro">
+            <div class="campo">
+                <label for="tipo">Tipo de Operação:</label>
+                <select id="tipo" required>
+                    <option value="colheita">Colheita (+ Entrada)</option>
+                    <option value="venda">Venda (💰 Receita)</option>
+                    <option value="perda">Perda/Descarte (📉 Baixa)</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="produto">Hortaliça:</label>
+                <input type="text" id="produto" placeholder="Ex: Alface Crespa" required>
+            </div>
+
+            <div class="campo">
+                <label for="quantidade">Quantidade (Kg/Maços):</label>
+                <input type="number" step="0.1" id="quantidade" placeholder="Ex: 15" required>
+            </div>
+
+            <div class="campo">
+                <label for="valor">Valor Total (R$):</label>
+                <input type="number" step="0.01" id="valor" placeholder="Ex: 45.00">
+            </div>
+
+            <button type="submit">Salvar Registro</button>
+        </form>
+
+        <h2>Histórico de Registros</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Produto</th>
+                    <th>Qtd</th>
+                    <th>Valor (R$)</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaDados">
+                </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
