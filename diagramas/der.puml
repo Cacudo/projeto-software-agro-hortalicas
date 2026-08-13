@@ -4,45 +4,45 @@
 hide circle
 skinparam linetype ortho
 
-' Definition das Entidades
-entity "Usuario" as usuario {
-  * id_cliente : INT <<PK>>
+' =========================
+' ENTIDADES
+' =========================
+
+entity "Hortalica" as hortalica {
+  * id_hortalica : INT <<PK>>
   --
   * nome : VARCHAR(100)
-  * email : VARCHAR(100)
-  * cpf : VARCHAR(14)
-    telefone : VARCHAR(20)
+  * tipo : VARCHAR(50)
+  * unidade_medida : VARCHAR(20)
+  * perecibilidade_dias : INT
 }
 
-entity "Hortalicas" as hortalicas {
-  * id_pedido : INT <<PK>>
+entity "Lote_Estoque" as lote {
+  * id_lote : INT <<PK>>
   --
-  * id_cliente : INT <<FK>>
-  * data_criacao : DATETIME
+  * id_hortalica : INT <<FK>>
+  * data_colheita : DATE
+  * quantidade : DECIMAL(10,2)
+  * quantidade_disponivel : DECIMAL(10,2)
   * status : VARCHAR(30)
-  * valor_total : DECIMAL(10,2)
+  * risco_deterioracao : VARCHAR(20)
 }
 
-' entity "ITEM_PEDIDO" as item {
-'   * id_item : INT <<PK>>
-'   --
-'   * id_pedido : INT <<FK>>
-'   * id_produto : INT <<FK>>
-'   * quantidade : INT
-'   * preco_unitario : DECIMAL(10,2)
-' }
+entity "Alerta" as alerta {
+  * id_alerta : INT <<PK>>
+  --
+  * id_lote : INT <<FK>>
+  * data_alerta : DATETIME
+  * tipo_alerta : VARCHAR(50)
+  * mensagem : VARCHAR(255)
+  * visualizado : BOOLEAN
+}
 
-' entity "PRODUTO" as produto {
-'   * id_produto : INT <<PK>>
-'   --
-'   * nome : VARCHAR(100)
-'   * preco : DECIMAL(10,2)
-'     estoque : INT
-' }
+' =========================
+' RELACIONAMENTOS
+' =========================
 
-' Relacionamentos e Cardinalidades (Crow's Foot)
-usuario ||--o{ hortalicas : "registra"
-' pedido ||--|{ item : "possui"
-' produto ||--o{ item : "está presente em"
+hortalica ||--o{ lote : "possui"
+lote ||--o{ alerta : "gera"
 
 @enduml
