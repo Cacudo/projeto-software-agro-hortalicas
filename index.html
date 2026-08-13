@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Descartes - Hortaliças</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <span class="tag">CONTROLE DE ESTOQUE</span>
+      <h1>🥬 Controle de Descartes</h1>
+      <p>Registre perdas de hortaliças e acompanhe o desperdício.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="cards">
+      <div class="card">
+        <span>Estoque ativo</span>
+        <strong id="totalStock">0 kg</strong>
+      </div>
+      <div class="card">
+        <span>Total descartado</span>
+        <strong id="totalDiscarded">0 kg</strong>
+      </div>
+      <div class="card">
+        <span>Registros</span>
+        <strong id="totalRecords">0</strong>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Registrar novo descarte</h2>
+      <p class="muted">Informe a hortaliça, a quantidade e o motivo da perda.</p>
+
+      <form id="discardForm">
+        <div class="grid">
+          <label>
+            Hortaliça
+            <select id="vegetable" required>
+              <option value="">Selecione...</option>
+              <option value="Alface">Alface</option>
+              <option value="Tomate">Tomate</option>
+              <option value="Cenoura">Cenoura</option>
+              <option value="Batata">Batata</option>
+              <option value="Couve">Couve</option>
+            </select>
+          </label>
+
+          <label>
+            Quantidade descartada (kg)
+            <input id="quantity" type="number" min="0.01" step="0.01" required placeholder="Ex.: 5">
+          </label>
+
+          <label class="full">
+            Motivo do descarte
+            <select id="reason" required>
+              <option value="">Selecione o motivo...</option>
+              <option>Deterioração natural</option>
+              <option>Pragas</option>
+              <option>Doenças</option>
+              <option>Danos no transporte</option>
+              <option>Armazenamento inadequado</option>
+              <option>Outros</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="stockInfo" class="stock-info">Selecione uma hortaliça para consultar o estoque.</div>
+        <button type="submit">Registrar descarte</button>
+      </form>
+
+      <div id="message" class="message hidden"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-header">
+        <div>
+          <h2>Estoque por hortaliça</h2>
+          <p class="muted">O estoque é reduzido automaticamente após cada descarte.</p>
+        </div>
+      </div>
+      <div id="stockList" class="stock-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-header">
+        <div>
+          <h2>Histórico de descartes</h2>
+          <p class="muted">Consulte os registros realizados.</p>
+        </div>
+        <button id="resetBtn" class="secondary">Restaurar estoque inicial</button>
+      </div>
+      <div id="history"></div>
+    </section>
+  </main>
+
+  <footer>Projeto acadêmico — Controle de perdas de hortaliças</footer>
+  <script src="script.js"></script>
+</body>
+</html>
