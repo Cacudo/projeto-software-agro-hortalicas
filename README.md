@@ -1,19 +1,19 @@
-# 🌾 AgroHorti - Sistema de Gestão Agrícola (Pulverização)
+# 🌾 Sistema de Gestão Agrícola - Pulverização (AgroHorti)
 
-Aplicação web desenvolvida em Flask para gerenciamento e cálculo do volume de calda aplicada em pulverizações agrícolas.
+Aplicação web em Flask para cadastro, cálculo de volume de calda e gerenciamento de pulverizações agrícolas.
 
-## 🚀 Tecnologias Utilizadas
-* **Linguagem:** Python 3
-* **Framework Web:** Flask
-* **Template Engine:** Jinja2
-* **Interface:** HTML5 / CSS3
+## 🛠️ Tecnologias Utilizadas
+* **Backend:** Python / Flask
+* **Frontend:** HTML5 / CSS3 (com Jinja2)
+* **Versionamento:** Git / GitHub
 * **Hospedagem:** PythonAnywhere
 
 ## 📌 Funcionalidades
-* **Gerenciamento de Registros (CRUD):** Permite cadastrar, visualizar, editar e remover aplicações de pulverização.
-* **Cálculo Automático:** Aplica a regra de negócio para calcular o volume total de calda com base na área em hectares e na dosagem por hectare.
+* **Cadastro:** Entrada de dados para Talhão, Cultura, Área (ha) e Dosagem (L/ha).
+* **Cálculo Automático:** Aplicação da regra para cálculo do Volume Total (L).
+* **Listagem:** Visualização dos registros salvos em tabela na página principal.
+* **Ações (CRUD):** Botões para editar e excluir registros existentes.
 
-## 🛠️ Como Executar Localmente
-1. Clone o repositório:
-   ```bash
-   git clone [https://github.com/Cacudo/projeto-software-agro-hortalicas.git](https://github.com/Cacudo/projeto-software-agro-hortalicas.git)
+## 🔗 Links do Projeto
+* **Repositório GitHub:** https://github.com/Cacudo/projeto-software-agro-hortalicas
+* **Aplicação Online:** https://Endrew157.pythonanywhere.com
