@@ -1,13 +1,19 @@
-# projeto-software-agro-hortalicas
-# Gestão de Estoque, Perdas e Vendas de Hortaliças
+# 🌾 Sistema de Gestão Agrícola - Pulverização (AgroHorti)
 
-##  Problema do Agronegócio
-Produtos folhosos e vegetais possuem um ciclo de vida curto e estragam muito rápido. Devido a essa alta perecibilidade, o produtor de feira ou de estufa frequentemente perde o controle sobre o volume real colhido, a quantidade de mercadoria descartada por deterioração e o lucro líquido obtido ao final do dia. 
+Aplicação web em Flask para cadastro, cálculo de volume de calda e gerenciamento de pulverizações agrícolas.
 
-O objetivo deste sistema é gerenciar o cadastro das colheitas diárias, registrar os descartes/perdas por degradação e consolidar o balanço das vendas no varejo, garantindo controle financeiro e previsibilidade ao produtor rural.
+## 🛠️ Tecnologias Utilizadas
+* **Backend:** Python / Flask
+* **Frontend:** HTML5 / CSS3 (com Jinja2)
+* **Versionamento:** Git / GitHub
+* **Hospedagem:** PythonAnywhere
 
-##  Integrantes da Equipe
-* Miguel Eduardo(@Cacudo)
-* Miguel Rodrigues (@usuarioGitHub2)
-* Vitor Emanuel (@usuarioGitHub3)
-* Endrew Henrique (@usuarioGitHub4)
+## 📌 Funcionalidades
+* **Cadastro:** Entrada de dados para Talhão, Cultura, Área (ha) e Dosagem (L/ha).
+* **Cálculo Automático:** Aplicação da regra para cálculo do Volume Total (L).
+* **Listagem:** Visualização dos registros salvos em tabela na página principal.
+* **Ações (CRUD):** Botões para editar e excluir registros existentes.
+
+## 🔗 Links do Projeto
+* **Repositório GitHub:** https://github.com/Cacudo/projeto-software-agro-hortalicas
+* **Aplicação Online:** https://Endrew157.pythonanywhere.com
