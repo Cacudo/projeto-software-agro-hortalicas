@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>US12 • Relatório Geral da Produção</title>
+
+  <style>
+    :root{
+      --verde:#217a43;
+      --verde-2:#2ea85c;
+      --verde-claro:#eaf7ee;
+      --fundo:#f4f7f5;
+      --card:#ffffff;
+      --texto:#183022;
+      --muted:#728078;
+      --borda:#e3ebe6;
+      --vermelho:#d64545;
+      --amarelo:#d79724;
+      --sombra:0 10px 30px rgba(24,48,34,.08);
+      --raio:18px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:var(--fundo);
+      color:var(--texto);
+    }
+
+    button,input,select{font:inherit}
+
+    .layout{
+      min-height:100vh;
+      display:flex;
+    }
+
+    /* MENU */
+    .sidebar{
+      width:250px;
+      position:fixed;
+      top:0;
+      bottom:0;
+      left:0;
+      background:#143622;
+      color:#fff;
+      padding:25px 18px;
+      display:flex;
+      flex-direction:column;
+      z-index:10;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:8px 10px 24px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+
+    .brand-icon{
+      width:43px;
+      height:43px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:#2ea85c;
+      font-size:23px;
+    }
+
+    .brand strong{font-size:17px}
+    .brand small{display:block;color:#b9c9bf;margin-top:3px}
+
+    .menu{
+      margin-top:22px;
+      display:grid;
+      gap:8px;
+    }
+
+    .menu a{
+      text-decoration:none;
+      color:#d8e5dd;
+      padding:13px 14px;
+      border-radius:11px;
+      display:flex;
+      gap:11px;
+      align-items:center;
+      transition:.2s;
+    }
+
+    .menu a:hover,.menu a.active{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+    }
+
+    .menu .emoji{width:22px;text-align:center}
+
+    .sidebar-bottom{
+      margin-top:auto;
+      padding:14px;
+      border-radius:13px;
+      background:rgba(255,255,255,.07);
+      color:#d4e1d8;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    /* CONTEÚDO */
+    .content{
+      margin-left:250px;
+      width:calc(100% - 250px);
+      padding:28px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      margin-bottom:25px;
+    }
+
+    .topbar h1{
+      font-size:30px;
+      letter-spacing:-.5px;
+    }
+
+    .topbar p{
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding:11px 15px;
+      border-radius:11px;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--verde);color:#fff}
+    .btn-light{background:#fff;color:var(--texto);border:1px solid var(--borda)}
+
+    /* CARDS */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:15px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--borda);
+      border-radius:var(--raio);
+      padding:18px;
+      box-shadow:var(--sombra);
+      min-width:0;
+    }
+
+    .card-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .icon{
+      width:40px;
+      height:40px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:var(--verde-claro);
+      font-size:19px;
+    }
+
+    .card-label{
+      color:var(--muted);
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .card-value{
+      font-size:25px;
+      font-weight:800;
+      margin-top:13px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .card-note{
+      margin-top:7px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* GRID PRINCIPAL */
+    .grid{
+      display:grid;
+      grid-template-columns:1.55fr 1fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .panel{
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:var(--raio);
+      box-shadow:var(--sombra);
+      padding:20px;
+    }
+
+    .panel-title{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom:18px;
+    }
+
+    .panel-title h2{font-size:19px}
+    .panel-title p{font-size:12px;color:var(--muted);margin-top:4px}
+
+    /* BARRAS */
+    .metric{margin:18px 0}
+    .metric-top{
+      display:flex;
+      justify-content:space-between;
+      font-size:13px;
+      margin-bottom:7px;
+    }
+
+    .track{
+      height:12px;
+      border-radius:30px;
+      background:#edf1ee;
+      overflow:hidden;
+    }
+
+    .fill{
+      height:100%;
+      border-radius:30px;
+      transition:.4s;
+      background:linear-gradient(90deg,var(--verde),var(--verde-2));
+    }
+
+    .fill.red{background:#db6262}
+    .fill.yellow{background:#e1aa42}
+
+    .mini-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .mini{
+      background:#f7faf8;
+      border:1px solid var(--borda);
+      border-radius:12px;
+      padding:13px;
+    }
+
+    .mini span{font-size:12px;color:var(--muted)}
+    .mini strong{display:block;margin-top:5px;font-size:18px}
+
+    /* FORMULÁRIO */
+    .form{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:13px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .field label{
+      font-size:12px;
+      font-weight:700;
+      color:#526059;
+    }
+
+    .field input,.field select{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid var(--borda);
+      border-radius:10px;
+      background:#fbfdfb;
+      outline:none;
+    }
+
+    .field input:focus,.field select:focus{
+      border-color:var(--verde-2);
+      box-shadow:0 0 0 3px rgba(46,168,92,.10);
+    }
+
+    .form-actions{
+      grid-column:1/-1;
+      display:flex;
+      gap:9px;
+      justify-content:flex-end;
+      margin-top:3px;
+    }
+
+    /* TABELA */
+    .table-wrap{overflow:auto}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:850px;
+    }
+
+    th,td{
+      padding:13px 11px;
+      border-bottom:1px solid #edf0ee;
+      text-align:left;
+      font-size:13px;
+    }
+
+    th{
+      color:#66746b;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+      background:#fbfcfb;
+    }
+
+    tbody tr:hover{background:#fbfefc}
+
+    .tag{
+      display:inline-flex;
+      padding:5px 8px;
+      border-radius:30px;
+      background:var(--verde-claro);
+      color:#1e6d3c;
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .money{font-weight:800}
+    .profit{color:var(--verde)}
+    .loss{color:var(--vermelho);font-weight:700}
+
+    .empty{
+      padding:30px !important;
+      text-align:center !important;
+      color:var(--muted);
+    }
+
+    .delete{
+      border:0;
+      background:#fff2f2;
+      color:var(--vermelho);
+      padding:6px 9px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:12px;
+    }
+
+    /* FILTROS */
+    .filters{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      margin-bottom:15px;
+    }
+
+    .filters input,.filters select{
+      padding:10px;
+      border:1px solid var(--borda);
+      border-radius:10px;
+      background:#fff;
+      outline:none;
+    }
+
+    /* RODAPÉ */
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      padding:24px 0 6px;
+      font-size:12px;
+    }
+
+    .status{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      background:#143622;
+      color:#fff;
+      padding:12px 15px;
+      border-radius:10px;
+      box-shadow:var(--sombra);
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(10px);
+      transition:.25s;
+      z-index:20;
+      font-size:13px;
+    }
+
+    .status.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* RESPONSIVO */
+    @media(max-width:1200px){
+      .cards{grid-template-columns:repeat(3,1fr)}
+    }
+
+    @media(max-width:900px){
+      .sidebar{
+        position:static;
+        width:100%;
+        min-height:auto;
+      }
+
+      .layout{display:block}
+      .content{
+        margin-left:0;
+        width:100%;
+        padding:20px;
+      }
+
+      .grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:650px){
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .form{grid-template-columns:1fr 1fr}
+      .topbar{align-items:flex-start;flex-direction:column}
+    }
+
+    @media(max-width:480px){
+      .cards{grid-template-columns:1fr}
+      .form{grid-template-columns:1fr}
+      .form-actions{justify-content:stretch}
+      .form-actions .btn{width:100%}
+    }
+
+    @media print{
+      .sidebar,.actions,.form-section,.filters,.delete,.footer{display:none!important}
+      .content{margin:0;width:100%;padding:10px}
+      body{background:#fff}
+      .card,.panel{box-shadow:none}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">🌱</div>
+      <div>
+        <strong>HortaControl</strong>
+        <small>Gestão de hortaliças</small>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a href="#dashboard" class="active"><span class="emoji">📊</span> Dashboard</a>
+      <a href="#producao"><span class="emoji">🥬</span> Produção</a>
+      <a href="#relatorio"><span class="emoji">📋</span> Relatório</a>
+      <a href="#analise"><span class="emoji">📈</span> Análise</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <strong>US12</strong><br>
+      Relatório Geral da Produção<br>
+      <span>Plantio → Colheita → Perdas → Estoque → Vendas</span>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <section id="dashboard">
+      <div class="topbar">
+        <div>
+          <h1>Relatório Geral da Produção</h1>
+          <p>Visão geral da produção de hortaliças e dos resultados da propriedade.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-light" onclick="exportarCSV()">⬇ Exportar CSV</button>
+          <button class="btn btn-primary" onclick="window.print()">🖨 Imprimir</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-label">Total plantado</div>
+            <div class="icon">🌱</div>
+          </div>
+          <div class="card-value" id="cPlantado">0 kg</div>
+          <div class="card-note">Quantidade registrada</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-label">Total colhido</div>
+            <div class="icon">🥬</div>
+          </div>
+          <div class="card-value" id="cColhido">0 kg</div>
+          <div class="card-note">Produção colhida</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-label">Perdas</div>
+            <div class="icon">⚠️</div>
+          </div>
+          <div class="card-value" id="cPerdido">0 kg</div>
+          <div class="card-note">Deterioração e descarte</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-label">Estoque</div>
+            <div class="icon">📦</div>
+          </div>
+          <div class="card-value" id="cEstoque">0 kg</div>
+          <div class="card-note">Disponível após as perdas</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-label">Vendas</div>
+            <div class="icon">💰</div>
+          </div>
+          <div class="card-value" id="cVendas">R$ 0,00</div>
+          <div class="card-note">Faturamento registrado</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-label">Lucro</div>
+            <div class="icon">📈</div>
+          </div>
+          <div class="card-value" id="cLucro">R$ 0,00</div>
+          <div class="card-note">Vendas menos gastos</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="analise" class="grid">
+
+      <div class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Indicadores da produção</h2>
+            <p>Acompanhamento visual dos principais resultados.</p>
+          </div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-top">
+            <span>Aproveitamento da colheita</span>
+            <strong id="aproveitamentoTxt">0%</strong>
+          </div>
+          <div class="track"><div class="fill" id="barraAproveitamento"></div></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-top">
+            <span>Percentual de perdas</span>
+            <strong id="perdaTxt">0%</strong>
+          </div>
+          <div class="track"><div class="fill red" id="barraPerda"></div></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-top">
+            <span>Estoque em relação ao colhido</span>
+            <strong id="estoqueTxt">0%</strong>
+          </div>
+          <div class="track"><div class="fill yellow" id="barraEstoque"></div></div>
+        </div>
+
+        <div class="mini-stats">
+          <div class="mini">
+            <span>Registros</span>
+            <strong id="qtdRegistros">0</strong>
+          </div>
+
+          <div class="mini">
+            <span>Gastos</span>
+            <strong id="miniGastos">R$ 0,00</strong>
+          </div>
+
+          <div class="mini">
+            <span>Margem</span>
+            <strong id="miniMargem">0%</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Resumo</h2>
+            <p>Leitura rápida do relatório.</p>
+          </div>
+        </div>
+
+        <p style="line-height:1.6;color:#56645c;font-size:14px">
+          Este módulo reúne os dados cadastrados de produção para facilitar
+          o acompanhamento das hortaliças desde a quantidade plantada até
+          os resultados das vendas.
+        </p>
+
+        <div style="margin-top:18px;padding:14px;border-radius:12px;background:#eaf7ee">
+          <strong style="display:block;margin-bottom:6px">💡 Resultado atual</strong>
+          <span id="textoResultado" style="font-size:13px;color:#45604e">
+            Cadastre uma produção para visualizar o resultado.
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="producao" class="panel form-section" style="margin-top:18px">
+      <div class="panel-title">
+        <div>
+          <h2>Adicionar produção</h2>
+          <p>Cadastre os dados de uma hortaliça.</p>
+        </div>
+      </div>
+
+      <div class="form">
+
+        <div class="field">
+          <label for="hortalica">Hortaliça</label>
+          <select id="hortalica">
+            <option>Alface</option>
+            <option>Tomate</option>
+            <option>Cenoura</option>
+            <option>Couve</option>
+            <option>Beterraba</option>
+            <option>Rúcula</option>
+            <option>Pepino</option>
+            <option>Outra</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="data">Data</label>
+          <input type="date" id="data">
+        </div>
+
+        <div class="field">
+          <label for="plantado">Plantado (kg)</label>
+          <input type="number" id="plantado" min="0" step="0.1" placeholder="Ex.: 100">
+        </div>
+
+        <div class="field">
+          <label for="colhido">Colhido (kg)</label>
+          <input type="number" id="colhido" min="0" step="0.1" placeholder="Ex.: 85">
+        </div>
+
+        <div class="field">
+          <label for="perdido">Perdido (kg)</label>
+          <input type="number" id="perdido" min="0" step="0.1" placeholder="Ex.: 5">
+        </div>
+
+        <div class="field">
+          <label for="vendas">Vendas (R$)</label>
+          <input type="number" id="vendas" min="0" step="0.01" placeholder="Ex.: 500">
+        </div>
+
+        <div class="field">
+          <label for="gastos">Gastos (R$)</label>
+          <input type="number" id="gastos" min="0" step="0.01" placeholder="Ex.: 200">
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-light" onclick="limparFormulario()">Limpar</button>
+          <button class="btn btn-primary" onclick="adicionarRegistro()">+ Adicionar registro</button>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="relatorio" class="panel" style="margin-top:18px">
+      <div class="panel-title">
+        <div>
+          <h2>Registros da produção</h2>
+          <p>Histórico cadastrado neste navegador.</p>
+        </div>
+      </div>
+
+      <div class="filters">
+        <input type="text" id="busca" placeholder="🔎 Buscar hortaliça..." oninput="renderizarTabela()">
+        <select id="filtro" onchange="renderizarTabela()">
+          <option value="todos">Todas as hortaliças</option>
+          <option>Alface</option>
+          <option>Tomate</option>
+          <option>Cenoura</option>
+          <option>Couve</option>
+          <option>Beterraba</option>
+          <option>Rúcula</option>
+          <option>Pepino</option>
+          <option>Outra</option>
+        </select>
+        <button class="btn btn-light" onclick="limparTodos()">🗑 Limpar registros</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Hortaliça</th>
+              <th>Data</th>
+              <th>Plantado</th>
+              <th>Colhido</th>
+              <th>Perdido</th>
+              <th>Estoque</th>
+              <th>Vendas</th>
+              <th>Gastos</th>
+              <th>Lucro</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="tabela"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="footer">
+      US12 • Relatório Geral da Produção • Projeto de gestão de hortaliças
+    </div>
+
+  </main>
+</div>
+
+<div id="status" class="status"></div>
+
+<script>
+  const CHAVE = "hortacontrol_us12";
+
+  let registros = JSON.parse(localStorage.getItem(CHAVE) || "null");
+
+  if (!registros) {
+    registros = [
+      {hortalica:"Alface", data:"2026-09-20", plantado:150, colhido:120, perdido:10, vendas:700, gastos:300},
+      {hortalica:"Tomate", data:"2026-09-21", plantado:200, colhido:160, perdido:10, vendas:1150, gastos:630}
+    ];
+    salvar();
+  }
+
+  document.getElementById("data").value = new Date().toISOString().split("T")[0];
+
+  function salvar(){
+    localStorage.setItem(CHAVE, JSON.stringify(registros));
+  }
+
+  function dinheiro(valor){
+    return valor.toLocaleString("pt-BR", {
+      style:"currency",
+      currency:"BRL"
+    });
+  }
+
+  function numero(valor){
+    return Number(valor || 0);
+  }
+
+  function formatarData(data){
+    if(!data) return "-";
+    const [a,m,d] = data.split("-");
+    return `${d}/${m}/${a}`;
+  }
+
+  function mostrarStatus(msg){
+    const el = document.getElementById("status");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(window._statusTimer);
+    window._statusTimer = setTimeout(() => {
+      el.classList.remove("show");
+    }, 2200);
+  }
+
+  function calcular(){
+    return registros.reduce((acc, r) => {
+      acc.plantado += numero(r.plantado);
+      acc.colhido += numero(r.colhido);
+      acc.perdido += numero(r.perdido);
+      acc.vendas += numero(r.vendas);
+      acc.gastos += numero(r.gastos);
+      return acc;
+    }, {plantado:0,colhido:0,perdido:0,vendas:0,gastos:0});
+  }
+
+  function atualizarDashboard(){
+    const t = calcular();
+    const estoque = Math.max(0, t.colhido - t.perdido);
+    const lucro = t.vendas - t.gastos;
+
+    const aproveitamento = t.colhido > 0
+      ? Math.max(0, Math.min(100, ((t.colhido - t.perdido) / t.colhido) * 100))
+      : 0;
+
+    const perda = t.plantado > 0
+      ? Math.max(0, Math.min(100, (t.perdido / t.plantado) * 100))
+      : 0;
+
+    const estoquePct = t.colhido > 0
+      ? Math.max(0, Math.min(100, (estoque / t.colhido) * 100))
+      : 0;
+
+    const margem = t.vendas > 0
+      ? (lucro / t.vendas) * 100
+      : 0;
+
+    document.getElementById("cPlantado").textContent = t.plantado.toFixed(1) + " kg";
+    document.getElementById("cColhido").textContent = t.colhido.toFixed(1) + " kg";
+    document.getElementById("cPerdido").textContent = t.perdido.toFixed(1) + " kg";
+    document.getElementById("cEstoque").textContent = estoque.toFixed(1) + " kg";
+    document.getElementById("cVendas").textContent = dinheiro(t.vendas);
+    document.getElementById("cLucro").textContent = dinheiro(lucro);
+
+    document.getElementById("aproveitamentoTxt").textContent = aproveitamento.toFixed(1) + "%";
+    document.getElementById("perdaTxt").textContent = perda.toFixed(1) + "%";
+    document.getElementById("estoqueTxt").textContent = estoquePct.toFixed(1) + "%";
+
+    document.getElementById("barraAproveitamento").style.width = aproveitamento + "%";
+    document.getElementById("barraPerda").style.width = perda + "%";
+    document.getElementById("barraEstoque").style.width = estoquePct + "%";
+
+    document.getElementById("qtdRegistros").textContent = registros.length;
+    document.getElementById("miniGastos").textContent = dinheiro(t.gastos);
+    document.getElementById("miniMargem").textContent = margem.toFixed(1) + "%";
+
+    let resultado = "Cadastre uma produção para visualizar o resultado.";
+
+    if(registros.length > 0){
+      if(lucro > 0){
+        resultado = `A produção registrada apresenta ${dinheiro(lucro)} de lucro considerando vendas e gastos cadastrados.`;
+      } else if(lucro < 0){
+        resultado = `Os gastos cadastrados estão acima das vendas em ${dinheiro(Math.abs(lucro))}.`;
+      } else {
+        resultado = "As vendas e os gastos cadastrados estão no mesmo valor.";
+      }
+    }
+
+    document.getElementById("textoResultado").textContent = resultado;
+  }
+
+  function renderizarTabela(){
+    const tbody = document.getElementById("tabela");
+    const busca = document.getElementById("busca").value.toLowerCase().trim();
+    const filtro = document.getElementById("filtro").value;
+
+    const lista = registros.filter(r => {
+      const combinaBusca = r.hortalica.toLowerCase().includes(busca);
+      const combinaFiltro = filtro === "todos" || r.hortalica === filtro;
+      return combinaBusca && combinaFiltro;
+    });
+
+    tbody.innerHTML = "";
+
+    if(lista.length === 0){
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="10" class="empty">Nenhum registro encontrado.</td>
+        </tr>
+      `;
+      return;
+    }
+
+    lista.forEach((r, indexFiltrado) => {
+      const indexReal = registros.indexOf(r);
+      const estoque = Math.max(0, numero(r.colhido) - numero(r.perdido));
+      const lucro = numero(r.vendas) - numero(r.gastos);
+
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td><span class="tag">${r.hortalica}</span></td>
+        <td>${formatarData(r.data)}</td>
+        <td>${numero(r.plantado).toFixed(1)} kg</td>
+        <td>${numero(r.colhido).toFixed(1)} kg</td>
+        <td class="loss">${numero(r.perdido).toFixed(1)} kg</td>
+        <td>${estoque.toFixed(1)} kg</td>
+        <td class="money">${dinheiro(numero(r.vendas))}</td>
+        <td>${dinheiro(numero(r.gastos))}</td>
+        <td class="${lucro >= 0 ? "profit" : "loss"}">${dinheiro(lucro)}</td>
+        <td><button class="delete" onclick="excluirRegistro(${indexReal})">Excluir</button></td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  function adicionarRegistro(){
+    const hortalica = document.getElementById("hortalica").value;
+    const data = document.getElementById("data").value;
+    const plantado = numero(document.getElementById("plantado").value);
+    const colhido = numero(document.getElementById("colhido").value);
+    const perdido = numero(document.getElementById("perdido").value);
+    const vendas = numero(document.getElementById("vendas").value);
+    const gastos = numero(document.getElementById("gastos").value);
+
+    if(!data){
+      alert("Escolha a data.");
+      return;
+    }
+
+    if(plantado === 0 && colhido === 0 && perdido === 0 && vendas === 0 && gastos === 0){
+      alert("Preencha os dados da produção.");
+      return;
+    }
+
+    if(colhido > plantado){
+      alert("A quantidade colhida não pode ser maior que a quantidade plantada.");
+      return;
+    }
+
+    if(perdido > colhido){
+      alert("A quantidade perdida não pode ser maior que a quantidade colhida.");
+      return;
+    }
+
+    registros.push({
+      hortalica,
+      data,
+      plantado,
+      colhido,
+      perdido,
+      vendas,
+      gastos
+    });
+
+    salvar();
+    atualizarDashboard();
+    renderizarTabela();
+    limparFormulario();
+    mostrarStatus("✅ Registro adicionado com sucesso!");
+  }
+
+  function limparFormulario(){
+    document.getElementById("plantado").value = "";
+    document.getElementById("colhido").value = "";
+    document.getElementById("perdido").value = "";
+    document.getElementById("vendas").value = "";
+    document.getElementById("gastos").value = "";
+    document.getElementById("data").value = new Date().toISOString().split("T")[0];
+  }
+
+  function excluirRegistro(index){
+    if(!confirm("Deseja excluir este registro?")) return;
+
+    registros.splice(index, 1);
+    salvar();
+    atualizarDashboard();
+    renderizarTabela();
+    mostrarStatus("🗑 Registro excluído.");
+  }
+
+  function limparTodos(){
+    if(!registros.length) return;
+
+    if(confirm("Deseja apagar todos os registros deste navegador?")){
+      registros = [];
+      salvar();
+      atualizarDashboard();
+      renderizarTabela();
+      mostrarStatus("🗑 Todos os registros foram apagados.");
+    }
+  }
+
+  function exportarCSV(){
+    if(!registros.length){
+      alert("Não existem registros para exportar.");
+      return;
+    }
+
+    const cabecalho = [
+      "Hortalica","Data","Plantado (kg)","Colhido (kg)",
+      "Perdido (kg)","Estoque (kg)","Vendas (R$)",
+      "Gastos (R$)","Lucro (R$)"
+    ];
+
+    const linhas = registros.map(r => {
+      const estoque = Math.max(0, numero(r.colhido) - numero(r.perdido));
+      const lucro = numero(r.vendas) - numero(r.gastos);
+
+      return [
+        r.hortalica,
+        r.data,
+        r.plantado,
+        r.colhido,
+        r.perdido,
+        estoque,
+        r.vendas,
+        r.gastos,
+        lucro
+      ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(";");
+    });
+
+    const csv = [cabecalho.join(";"), ...linhas].join("\n");
+    const blob = new Blob(["\ufeff" + csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "relatorio-producao-hortalicas.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+    mostrarStatus("⬇ CSV exportado.");
+  }
+
+  atualizarDashboard();
+  renderizarTabela();
+</script>
+
+</body>
+</html>
