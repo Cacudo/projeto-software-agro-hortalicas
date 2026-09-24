@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Hortaliças</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f9f4; }
+        h1, h2 { color: #2e7d32; }
+        .card { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        input, button { padding: 8px; margin: 5px 0; display: block; width: 100%; max-width: 300px; }
+        button { background-color: #2e7d32; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        button:hover { background-color: #1b5e20; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #e8f5e9; }
+    </style>
+</head>
+<body>
+
+    <h1>🌱 Gestão de Hortaliças & Feira</h1>
+
+    <div class="card">
+        <h2>1. Registrar Colheita Diária</h2>
+        <input type="text" id="prod_nome" placeholder="Nome da Hortaliça (ex: Alface)">
+        <input type="number" id="prod_qtd" placeholder="Quantidade Colhida">
+        <input type="number" step="0.01" id="prod_custo" placeholder="Custo de Produção (R$)">
+        <input type="number" step="0.01" id="prod_venda" placeholder="Preço de Venda (R$)">
+        <button onclick="adicionarColheita()">Salvar Colheita</button>
+    </div>
+
+    <div class="card">
+        <h2>2. Registrar Perda/Deterioração</h2>
+        <input type="text" id="perda_nome" placeholder="Nome do Produto">
+        <input type="number" id="perda_qtd" placeholder="Quantidade Perda">
+        <button onclick="adicionarPerda()">Registrar Descarte</button>
+    </div>
+
+    <div class="card">
+        <h2>📊 Balanço do Dia</h2>
+        <table id="tabela-balanco">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Colhido</th>
+                    <th>Perdido</th>
+                    <th>Vendido</th>
+                    <th>Faturamento</th>
+                    <th>Prejuízo</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <h3 id="lucro-total">Lucro Real Líquido: R$ 0,00</h3>
+    </div>
+
+    <script>
+        async function adicionarColheita() {
+            const payload = {
+                produto: document.getElementById('prod_nome').value,
+                quantidade: document.getElementById('prod_qtd').value,
+                preco_custo: document.getElementById('prod_custo').value,
+                preco_venda: document.getElementById('prod_venda').value
+            };
+            const res = await fetch('/colheita', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            atualizarTabela(data.estoque);
+        }
+
+        async function adicionarPerda() {
+            const payload = {
+                produto: document.getElementById('perda_nome').value,
+                quantidade: document.getElementById('perda_qtd').value
+            };
+            const res = await fetch('/perda', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if(res.ok) {
+                atualizarTabela(data.estoque);
+            } else {
+                alert(data.mensagem);
+            }
+        }
+
+        function atualizarTabela(estoque) {
+            const tbody = document.querySelector('#tabela-balanco tbody');
+            tbody.innerHTML = '';
+            let lucroTotal = 0;
+
+            for (const [prod, dados] of Object.entries(estoque)) {
+                const vendidos = dados.colhido - dados.perdido;
+                const faturamento = vendidos * dados.preco_venda;
+                const prejuizo = dados.perdido * dados.preco_custo;
+                const custoTotal = dados.colhido * dados.preco_custo;
+                
+                lucroTotal += (faturamento - custoTotal);
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${prod}</td>
+                        <td>${dados.colhido}</td>
+                        <td>${dados.perdido}</td>
+                        <td>${vendidos}</td>
+                        <td>R$ ${faturamento.toFixed(2)}</td>
+                        <td>R$ ${prejuizo.toFixed(2)}</td>
+                    </tr>
+                `;
+            }
+            document.getElementById('lucro-total').innerText = `Lucro Real Líquido: R$ ${lucroTotal.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
