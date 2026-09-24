@@ -9,33 +9,33 @@ skinparam linetype ortho
 ' =========================
 
 entity "Hortalica" as hortalica {
-  * id_hortalica : INT <<PK>>
-  --
-  * nome : VARCHAR(100)
-  * tipo : VARCHAR(50)
-  * unidade_medida : VARCHAR(20)
-  * perecibilidade_dias : INT
+  * id_hortalica : INT <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * tipo : VARCHAR(50)
+  * unidade_medida : VARCHAR(20)
+  * perecibilidade_dias : INT
 }
 
 entity "Lote_Estoque" as lote {
-  * id_lote : INT <<PK>>
-  --
-  * id_hortalica : INT <<FK>>
-  * data_colheita : DATE
-  * quantidade : DECIMAL(10,2)
-  * quantidade_disponivel : DECIMAL(10,2)
-  * status : VARCHAR(30)
-  * risco_deterioracao : VARCHAR(20)
+  * id_lote : INT <<PK>>
+  --
+  * id_hortalica : INT <<FK>>
+  * data_colheita : DATE
+  * quantidade : DECIMAL(10,2)
+  * quantidade_disponivel : DECIMAL(10,2)
+  * status : VARCHAR(30)
+  * risco_deterioracao : VARCHAR(20)
 }
 
 entity "Alerta" as alerta {
-  * id_alerta : INT <<PK>>
-  --
-  * id_lote : INT <<FK>>
-  * data_alerta : DATETIME
-  * tipo_alerta : VARCHAR(50)
-  * mensagem : VARCHAR(255)
-  * visualizado : BOOLEAN
+  * id_alerta : INT <<PK>>
+  --
+  * id_lote : INT <<FK>>
+  * data_alerta : DATETIME
+  * tipo_alerta : VARCHAR(50)
+  * mensagem : VARCHAR(255)
+  * visualizado : BOOLEAN
 }
 
 ' =========================
@@ -45,4 +45,4 @@ entity "Alerta" as alerta {
 hortalica ||--o{ lote : "possui"
 lote ||--o{ alerta : "gera"
 
-@enduml
+@endumlS

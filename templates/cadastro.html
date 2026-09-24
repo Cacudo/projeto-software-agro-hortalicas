@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Hortaliças</title>
+    <title>Cadastro e Consulta de Hortaliças</title>
 
     <style>
         * {
@@ -31,7 +31,7 @@
 
         .container {
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             margin: 30px auto;
         }
 
@@ -40,11 +40,12 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
 
         .card h2 {
             color: #2e7d32;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 10px;
         }
@@ -59,8 +60,7 @@
             font-weight: bold;
         }
 
-        input,
-        select {
+        input, select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
@@ -68,8 +68,7 @@
             font-size: 15px;
         }
 
-        input:focus,
-        select:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #2e7d32;
         }
@@ -126,12 +125,53 @@
             background-color: #ccc;
         }
 
+        /* Estilos da Tabela de Estoque e Alertas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        tr.alerta-perigo {
+            background-color: #ffebee;
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .badge-alerta {
+            background-color: #d32f2f;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .badge-normal {
+            background-color: #388e3c;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
         @media (max-width: 600px) {
             .row {
                 grid-template-columns: 1fr;
                 gap: 0;
             }
-
             .container {
                 width: 95%;
             }
@@ -142,32 +182,24 @@
 <body>
 
     <header>
-        <h1> Gestão de Estufa</h1>
-        <p>Cadastro de Hortaliças e Estoque</p>
+        <h1>Gestão de Estufa</h1>
+        <p>Cadastro de Hortaliças e Controle de Estoque</p>
     </header>
 
     <main class="container">
 
+        <!-- CARD 1: FORMULÁRIO DE CADASTRO -->
         <section class="card">
-
             <h2>Cadastro de Hortaliça</h2>
 
             <form id="formHortalica">
 
                 <div class="form-group">
                     <label for="nome">Nome da Hortaliça</label>
-                    <input 
-                        type="text" 
-                        id="nome" 
-                        name="nome"
-                        placeholder="Ex: Alface"
-                        maxlength="100"
-                        required
-                    >
+                    <input type="text" id="nome" name="nome" placeholder="Ex: Alface" maxlength="100" required>
                 </div>
 
                 <div class="row">
-
                     <div class="form-group">
                         <label for="tipo">Tipo</label>
                         <select id="tipo" name="tipo" required>
@@ -191,139 +223,144 @@
                             <option value="caixa">Caixa</option>
                         </select>
                     </div>
-
                 </div>
 
                 <div class="form-group">
-                    <label for="perecibilidade">
-                        Tempo de Perecibilidade (dias)
-                    </label>
-
-                    <input 
-                        type="number"
-                        id="perecibilidade"
-                        name="perecibilidade_dias"
-                        min="1"
-                        placeholder="Ex: 3"
-                        required
-                    >
+                    <label for="perecibilidade">Tempo de Perecibilidade (dias)</label>
+                    <input type="number" id="perecibilidade" name="perecibilidade_dias" min="1" placeholder="Ex: 3" value="3" required>
                 </div>
 
-                <h2>Dados do Lote</h2>
+                <h3 style="margin: 20px 0 10px; color: #2e7d32;">Dados do Lote</h3>
 
                 <div class="form-group">
                     <label for="data_colheita">Data da Colheita</label>
-
-                    <input 
-                        type="date"
-                        id="data_colheita"
-                        name="data_colheita"
-                        required
-                    >
+                    <input type="date" id="data_colheita" name="data_colheita" required>
                 </div>
 
                 <div class="row">
-
                     <div class="form-group">
                         <label for="quantidade">Quantidade Colhida</label>
-
-                        <input 
-                            type="number"
-                            id="quantidade"
-                            name="quantidade"
-                            min="0"
-                            step="0.01"
-                            placeholder="Ex: 50"
-                            required
-                        >
+                        <input type="number" id="quantidade" name="quantidade" min="0" step="0.01" placeholder="Ex: 50" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="quantidade_disponivel">
-                            Quantidade Disponível
-                        </label>
-
-                        <input 
-                            type="number"
-                            id="quantidade_disponivel"
-                            name="quantidade_disponivel"
-                            min="0"
-                            step="0.01"
-                            placeholder="Ex: 50"
-                            required
-                        >
+                        <label for="preco_venda">Preço de Venda (R$)</label>
+                        <input type="number" id="preco_venda" name="preco_venda" min="0" step="0.01" placeholder="Ex: 4.50" value="4.50" required>
                     </div>
-
                 </div>
 
                 <div class="info">
-                    <strong> Controle de deterioração</strong>
-
-                    <p>
-                        O sistema utilizará a data de colheita e o tempo de
-                        perecibilidade para identificar lotes com risco de
-                        deterioração.
-                    </p>
-
-                    <p>
-                        Hortaliças com mais dias em estoque poderão receber
-                        um alerta para priorizar sua venda.
-                    </p>
-                </div>
-
-                <div class="form-group">
-                    <label for="status">Status do Lote</label>
-
-                    <select id="status" name="status" required>
-                        <option value="disponivel">Disponível</option>
-                        <option value="baixo_estoque">Baixo Estoque</option>
-                        <option value="esgotado">Esgotado</option>
-                    </select>
+                    <strong>Controle de deterioração</strong>
+                    <p>O sistema utilizará a data de colheita e o tempo de perecibilidade para identificar lotes com risco de deterioração.</p>
                 </div>
 
                 <div class="buttons">
-
-                    <button 
-                        type="submit" 
-                        class="btn-cadastrar"
-                    >
-                        Cadastrar Hortaliça
-                    </button>
-
-                    <button 
-                        type="reset" 
-                        class="btn-limpar"
-                    >
-                        Limpar
-                    </button>
-
+                    <button type="submit" class="btn-cadastrar">Cadastrar Hortaliça</button>
+                    <button type="reset" class="btn-limpar">Limpar</button>
                 </div>
 
             </form>
+        </section>
 
+        <!-- CARD 2: CONSULTA E ALERTAS DE ESTOQUE -->
+        <section class="card">
+            <h2>Consulta de Saldo e Alertas de Perecibilidade</h2>
+            <p style="margin-bottom: 15px; font-size: 14px; color: #666;">
+                Lotes ordenados da colheita mais antiga para a mais recente.
+            </p>
+
+            <table id="tabelaEstoque">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Data Colheita</th>
+                        <th>Dias no Estoque</th>
+                        <th>Quantidade</th>
+                        <th>Status / Alerta</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabela">
+                    <!-- Preenchido via JavaScript -->
+                </tbody>
+            </table>
         </section>
 
     </main>
 
     <script>
-        document
-            .getElementById("formHortalica")
-            .addEventListener("submit", function(event) {
+        // Carrega o estoque assim que a página abre
+        document.addEventListener("DOMContentLoaded", carregarEstoque);
 
-                event.preventDefault();
+        // Envio do formulário para a API Flask
+        document.getElementById("formHortalica").addEventListener("submit", async function(event) {
+            event.preventDefault();
 
-                const nome = document.getElementById("nome").value;
-                const dataColheita =
-                    document.getElementById("data_colheita").value;
+            const dados = {
+                produto: document.getElementById("nome").value,
+                quantidade: document.getElementById("quantidade").value,
+                preco_custo: 0, // Campo padrão para API
+                preco_venda: document.getElementById("preco_venda").value,
+                data_colheita: document.getElementById("data_colheita").value
+            };
 
-                alert(
-                    "Hortaliça cadastrada com sucesso!\\n\\n" +
-                    "Hortaliça: " + nome + "\\n" +
-                    "Data da colheita: " + dataColheita
-                );
+            try {
+                const resposta = await fetch('/colheita', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
 
-                this.reset();
-            });
+                if (resposta.ok) {
+                    alert("Hortaliça e lote cadastrados com sucesso!");
+                    this.reset();
+                    carregarEstoque(); // Atualiza a tabela imediatamente
+                } else {
+                    alert("Erro ao cadastrar a hortaliça.");
+                }
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+            }
+        });
+
+        // Função para consultar o estoque ordenado e renderizar os alertas
+        async function carregarEstoque() {
+            try {
+                const resposta = await fetch('/estoque');
+                const resultado = await resposta.json();
+                
+                const corpoTabela = document.getElementById("corpoTabela");
+                corpoTabela.innerHTML = "";
+
+                if (resultado.estoque.length === 0) {
+                    corpoTabela.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Nenhum lote cadastrado no estoque.</td></tr>";
+                    return;
+                }
+
+                resultado.estoque.forEach(lote => {
+                    const linha = document.createElement("tr");
+
+                    if (lote.risco_perda) {
+                        linha.classList.add("alerta-perigo");
+                    }
+
+                    const badge = lote.risco_perda 
+                        ? `<span class="badge-alerta">URGENTE: Priorizar Venda (${lote.dias_em_estoque} dias)</span>`
+                        : `<span class="badge-normal">OK (${lote.dias_em_estoque} dias)</span>`;
+
+                    linha.innerHTML = `
+                        <td><strong>${lote.produto}</strong></td>
+                        <td>${lote.data_colheita}</td>
+                        <td>${lote.dias_em_estoque} dia(s)</td>
+                        <td>${lote.quantidade}</td>
+                        <td>${badge}</td>
+                    `;
+
+                    corpoTabela.appendChild(linha);
+                });
+            } catch (erro) {
+                console.error("Erro ao carregar estoque:", erro);
+            }
+        }
     </script>
 
 </body>

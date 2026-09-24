@@ -21,7 +21,6 @@
         }
 
         /* CABEÇALHO */
-
         header {
             background-color: #2e7d32;
             color: white;
@@ -58,7 +57,6 @@
         }
 
         /* CONTAINER */
-
         .container {
             width: 90%;
             max-width: 1200px;
@@ -79,7 +77,6 @@
         }
 
         /* RESUMO */
-
         .resumo {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -110,7 +107,6 @@
         }
 
         /* TABELA */
-
         .tabela-container {
             background-color: white;
             padding: 25px;
@@ -148,7 +144,6 @@
         }
 
         /* STATUS */
-
         .status {
             display: inline-block;
             padding: 6px 10px;
@@ -173,7 +168,6 @@
         }
 
         /* LINHA DE RISCO */
-
         .linha-risco {
             background-color: #fff5f5;
         }
@@ -183,7 +177,6 @@
         }
 
         /* BOTÃO */
-
         .botao {
             display: inline-block;
             margin-top: 20px;
@@ -202,7 +195,6 @@
         }
 
         /* LEGENDA */
-
         .legenda {
             display: flex;
             gap: 20px;
@@ -236,7 +228,6 @@
         }
 
         /* RODAPÉ */
-
         footer {
             margin-top: 40px;
             background-color: #1b5e20;
@@ -246,7 +237,6 @@
         }
 
         /* RESPONSIVO */
-
         @media (max-width: 800px) {
 
             header {
@@ -266,407 +256,180 @@
 <body>
 
     <!-- CABEÇALHO -->
-
     <header>
-
         <div class="logo">
-
-            <h1> Gestão de Estufa</h1>
-
-            <p>
-                Controle de hortaliças e estoque
-            </p>
-
+            <h1>Gestão de Estufa</h1>
+            <p>Controle de hortaliças e estoque</p>
         </div>
 
         <nav>
-
-            <a href="index.html">
-                Início
-            </a>
-
-            <a href="cadastro.html">
-                Cadastrar
-            </a>
-
-            <a href="estoque.html">
-                Estoque
-            </a>
-
+            <a href="/">Início</a>
+            <a href="/cadastro">Cadastrar</a>
+            <a href="/estoque_page">Estoque</a>
         </nav>
-
     </header>
 
 
     <!-- CONTEÚDO -->
-
     <main class="container">
 
         <section class="titulo">
-
-            <h2> Estoque de Hortaliças</h2>
-
+            <h2>Estoque de Hortaliças</h2>
             <p>
                 Os lotes estão organizados da data de colheita
                 mais antiga para a mais recente.
             </p>
-
         </section>
 
 
         <!-- RESUMO -->
-
         <section class="resumo">
-
             <div class="resumo-card">
-
-                <h3>
-                    Total de Lotes
-                </h3>
-
-                <strong>
-                    25
-                </strong>
-
+                <h3>Total de Lotes</h3>
+                <strong id="totalLotes">0</strong>
             </div>
 
-
             <div class="resumo-card">
-
-                <h3>
-                    Quantidade em Estoque
-                </h3>
-
-                <strong>
-                    350
-                </strong>
-
+                <h3>Quantidade em Estoque</h3>
+                <strong id="totalQuantidade">0</strong>
             </div>
-
 
             <div class="resumo-card risco">
-
-                <h3>
-                    Lotes em Risco
-                </h3>
-
-                <strong>
-                    4
-                </strong>
-
+                <h3>Lotes em Risco</h3>
+                <strong id="totalRisco">0</strong>
             </div>
-
         </section>
 
 
         <!-- TABELA -->
-
         <section class="tabela-container">
-
-            <h2>
-                Lotes em Estoque
-            </h2>
+            <h2>Lotes em Estoque</h2>
 
             <table>
-
                 <thead>
-
                     <tr>
-
-                        <th>
-                            Hortaliça
-                        </th>
-
-                        <th>
-                            Tipo
-                        </th>
-
-                        <th>
-                            Data da Colheita
-                        </th>
-
-                        <th>
-                            Dias em Estoque
-                        </th>
-
-                        <th>
-                            Quantidade
-                        </th>
-
-                        <th>
-                            Risco
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
+                        <th>Hortaliça</th>
+                        <th>Tipo</th>
+                        <th>Data da Colheita</th>
+                        <th>Dias em Estoque</th>
+                        <th>Quantidade</th>
+                        <th>Risco</th>
+                        <th>Status</th>
                     </tr>
-
                 </thead>
 
-
-                <tbody>
-
-                    <!-- LOTE MAIS ANTIGO -->
-
-                    <tr class="linha-risco">
-
-                        <td>
-                            <strong>Alface</strong>
-                        </td>
-
-                        <td>
-                            Folha
-                        </td>
-
-                        <td>
-                            09/08/2026
-                        </td>
-
-                        <td>
-                            4 dias
-                        </td>
-
-                        <td>
-                            25 unidades
-                        </td>
-
-                        <td>
-                            <span class="status risco">
-                                 Alto
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status risco">
-                                Priorizar venda
-                            </span>
-                        </td>
-
-                    </tr>
-
-
-                    <!-- SEGUNDO LOTE -->
-
-                    <tr class="linha-risco">
-
-                        <td>
-                            <strong>Couve</strong>
-                        </td>
-
-                        <td>
-                            Folha
-                        </td>
-
-                        <td>
-                            08/08/2026
-                        </td>
-
-                        <td>
-                            5 dias
-                        </td>
-
-                        <td>
-                            40 maços
-                        </td>
-
-                        <td>
-                            <span class="status risco">
-                                 Alto
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status risco">
-                                Priorizar venda
-                            </span>
-                        </td>
-
-                    </tr>
-
-
-                    <!-- TERCEIRO LOTE -->
-
+                <tbody id="tabelaCorpo">
                     <tr>
-
-                        <td>
-                            <strong>Rúcula</strong>
-                        </td>
-
-                        <td>
-                            Folha
-                        </td>
-
-                        <td>
-                            10/08/2026
-                        </td>
-
-                        <td>
-                            3 dias
-                        </td>
-
-                        <td>
-                            30 maços
-                        </td>
-
-                        <td>
-                            <span class="status atencao">
-                                 Atenção
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status atencao">
-                                Monitorar
-                            </span>
-                        </td>
-
+                        <td colspan="7" style="text-align: center; color: #888;">Carregando lotes...</td>
                     </tr>
-
-
-                    <!-- QUARTO LOTE -->
-
-                    <tr>
-
-                        <td>
-                            <strong>Cenoura</strong>
-                        </td>
-
-                        <td>
-                            Raiz
-                        </td>
-
-                        <td>
-                            11/08/2026
-                        </td>
-
-                        <td>
-                            2 dias
-                        </td>
-
-                        <td>
-                            80 kg
-                        </td>
-
-                        <td>
-                            <span class="status normal">
-                                 Baixo
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status normal">
-                                Normal
-                            </span>
-                        </td>
-
-                    </tr>
-
-
-                    <!-- QUINTO LOTE -->
-
-                    <tr>
-
-                        <td>
-                            <strong>Beterraba</strong>
-                        </td>
-
-                        <td>
-                            Raiz
-                        </td>
-
-                        <td>
-                            12/08/2026
-                        </td>
-
-                        <td>
-                            1 dia
-                        </td>
-
-                        <td>
-                            60 kg
-                        </td>
-
-                        <td>
-                            <span class="status normal">
-                                 Baixo
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="status normal">
-                                Normal
-                            </span>
-                        </td>
-
-                    </tr>
-
                 </tbody>
-
             </table>
 
 
             <!-- LEGENDA -->
-
             <div class="legenda">
-
                 <div class="legenda-item">
-
                     <span class="bolinha verde"></span>
-
-                    <span>
-                        Normal
-                    </span>
-
+                    <span>Normal</span>
                 </div>
 
-
                 <div class="legenda-item">
-
                     <span class="bolinha amarelo"></span>
-
-                    <span>
-                        Atenção
-                    </span>
-
+                    <span>Atenção</span>
                 </div>
-
 
                 <div class="legenda-item">
-
                     <span class="bolinha vermelho"></span>
-
-                    <span>
-                        Alto risco / Priorizar venda
-                    </span>
-
+                    <span>Alto risco / Priorizar venda</span>
                 </div>
-
             </div>
 
-
-            <a
-                href="cadastro.html"
-                class="botao"
-            >
-                + Cadastrar nova hortaliça
-            </a>
-
+            <a href="/cadastro" class="botao">+ Cadastrar nova hortaliça</a>
         </section>
 
     </main>
 
 
     <!-- RODAPÉ -->
-
     <footer>
-
-        <p>
-            Sistema de Gestão de Estufa © 2026
-        </p>
-
+        <p>Sistema de Gestão de Estufa © 2026</p>
     </footer>
+
+    <!-- SCRIPT DE CONEXÃO COM A API FLASK -->
+    <script>
+        document.addEventListener("DOMContentLoaded", carregarEstoque);
+
+        async function carregarEstoque() {
+            try {
+                const resposta = await fetch('/estoque');
+                const resultado = await resposta.json();
+
+                if (resultado.status === 'sucesso') {
+                    const lotes = resultado.estoque;
+
+                    // 1. Atualizar cards de resumo
+                    const totalLotes = lotes.length;
+                    const totalQuantidade = lotes.reduce((acc, lote) => acc + Number(lote.quantidade), 0);
+                    const lotesEmRisco = lotes.filter(lote => lote.risco_perda).length;
+
+                    document.getElementById("totalLotes").innerText = totalLotes;
+                    document.getElementById("totalQuantidade").innerText = totalQuantidade;
+                    document.getElementById("totalRisco").innerText = lotesEmRisco;
+
+                    // 2. Preencher a Tabela
+                    const tbody = document.getElementById("tabelaCorpo");
+                    tbody.innerHTML = "";
+
+                    if (lotes.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #888;">Nenhum lote cadastrado no momento.</td></tr>';
+                        return;
+                    }
+
+                    lotes.forEach(lote => {
+                        const tr = document.createElement("tr");
+
+                        // Formatação visual baseada nos dias de estoque
+                        let riscoClasse = "normal";
+                        let riscoTexto = "Baixo";
+                        let statusClasse = "normal";
+                        let statusTexto = "Normal";
+
+                        if (lote.dias_em_estoque >= 3 && lote.dias_em_estoque < 4) {
+                            riscoClasse = "atencao";
+                            riscoTexto = "Atenção";
+                            statusClasse = "atencao";
+                            statusTexto = "Monitorar";
+                        } else if (lote.dias_em_estoque >= 4 || lote.risco_perda) {
+                            riscoClasse = "risco";
+                            riscoTexto = "Alto";
+                            statusClasse = "risco";
+                            statusTexto = "Priorizar venda";
+                            tr.className = "linha-risco";
+                        }
+
+                        // Formatar Data (YYYY-MM-DD para DD/MM/YYYY)
+                        const dataPartes = lote.data_colheita.split("-");
+                        const dataFormatada = `${dataPartes[2]}/${dataPartes[1]}/${dataPartes[0]}`;
+
+                        tr.innerHTML = `
+                            <td><strong>${lote.produto}</strong></td>
+                            <td>${lote.tipo || 'Folha'}</td>
+                            <td>${dataFormatada}</td>
+                            <td>${lote.dias_em_estoque} dia(s)</td>
+                            <td>${lote.quantidade} ${lote.unidade || 'unidades'}</td>
+                            <td><span class="status ${riscoClasse}">${riscoTexto}</span></td>
+                            <td><span class="status ${statusClasse}">${statusTexto}</span></td>
+                        `;
+
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch (erro) {
+                console.error("Erro ao carregar tabela de estoque:", erro);
+                document.getElementById("tabelaCorpo").innerHTML = '<tr><td colspan="7" style="text-align: center; color: #d32f2f;">Erro ao carregar dados do servidor.</td></tr>';
+            }
+        }
+    </script>
 
 </body>
 

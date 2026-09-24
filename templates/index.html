@@ -151,14 +151,6 @@
             background-color: #256628;
         }
 
-        .botao.alerta {
-            background-color: #d32f2f;
-        }
-
-        .botao.alerta:hover {
-            background-color: #b71c1c;
-        }
-
         /* ALERTAS */
         .alertas {
             background-color: white;
@@ -243,221 +235,150 @@
 <body>
 
     <!-- CABEÇALHO -->
-
     <header>
-
         <div class="logo">
-            <h1> Gestão de Estufa</h1>
+            <h1>Gestão de Estufa</h1>
             <p>Controle de hortaliças e estoque</p>
         </div>
 
         <nav>
-
-            <a href="index.html">
-                Início
-            </a>
-
-            <a href="cadastro.html">
-                Cadastrar
-            </a>
-
-            <a href="estoque.html">
-                Estoque
-            </a>
-
+            <a href="/">Início</a>
+            <a href="/cadastro">Cadastrar</a>
+            <a href="/estoque_page">Estoque</a>
         </nav>
-
     </header>
 
 
     <!-- CONTEÚDO PRINCIPAL -->
-
     <main class="container">
 
         <section class="welcome">
-
             <h2>Bem-vindo ao sistema!</h2>
-
             <p>
                 Acompanhe o estoque das hortaliças e priorize
                 os produtos com maior risco de deterioração.
             </p>
-
         </section>
 
 
-        <!-- INDICADORES -->
-
+        <!-- INDICADORES DINÂMICOS -->
         <section class="cards">
 
             <div class="card">
-
                 <h3>Hortaliças cadastradas</h3>
-
-                <div class="numero">
-                    12
-                </div>
-
+                <div class="numero" id="qtdHortalicas">0</div>
             </div>
 
-
             <div class="card">
-
                 <h3>Lotes em estoque</h3>
-
-                <div class="numero">
-                    25
-                </div>
-
+                <div class="numero" id="qtdLotes">0</div>
             </div>
-
 
             <div class="card">
-
                 <h3>Quantidade disponível</h3>
-
-                <div class="numero">
-                    350
-                </div>
-
+                <div class="numero" id="qtdTotal">0</div>
             </div>
-
 
             <div class="card alerta">
-
                 <h3>Lotes em risco</h3>
-
-                <div class="numero">
-                    4
-                </div>
-
+                <div class="numero" id="qtdRisco">0</div>
             </div>
 
         </section>
 
 
         <!-- AÇÕES PRINCIPAIS -->
-
         <section class="acoes">
 
             <div class="acao">
-
-                <h2> Cadastrar Hortaliça</h2>
-
+                <h2>Cadastrar Hortaliça</h2>
                 <p>
                     Cadastre uma nova hortaliça e informe os
                     dados do seu lote de estoque.
                 </p>
-
-                <a
-                    href="cadastro.html"
-                    class="botao"
-                >
-                    Novo Cadastro
-                </a>
-
+                <a href="/cadastro" class="botao">Novo Cadastro</a>
             </div>
 
-
             <div class="acao">
-
-                <h2> Consultar Estoque</h2>
-
+                <h2>Consultar Estoque</h2>
                 <p>
                     Visualize os lotes disponíveis e identifique
                     quais hortaliças devem ser vendidas primeiro.
                 </p>
-
-                <a
-                    href="estoque.html"
-                    class="botao"
-                >
-                    Ver Estoque
-                </a>
-
+                <a href="/estoque_page" class="botao">Ver Estoque</a>
             </div>
 
         </section>
 
 
-        <!-- ALERTAS -->
-
+        <!-- PAINEL DE ALERTAS -->
         <section class="alertas">
-
-            <h2> Alertas de Deterioração</h2>
-
-
-            <div class="alerta-item">
-
-                <div>
-                    <strong>Alface</strong>
-
-                    <br>
-
-                    <span>
-                        Colhida há 4 dias
-                    </span>
-                </div>
-
-                <span>
-                     Alto risco
-                </span>
-
+            <h2>Alertas de Deterioração</h2>
+            <div id="listaAlertas">
+                <p style="color: #888;">Buscando alertas de estoque...</p>
             </div>
-
-
-            <div class="alerta-item">
-
-                <div>
-                    <strong>Couve</strong>
-
-                    <br>
-
-                    <span>
-                        Colhida há 5 dias
-                    </span>
-                </div>
-
-                <span>
-                     Alto risco
-                </span>
-
-            </div>
-
-
-            <div class="alerta-item">
-
-                <div>
-                    <strong>Rúcula</strong>
-
-                    <br>
-
-                    <span>
-                        Colhida há 3 dias
-                    </span>
-                </div>
-
-                <span>
-                     Atenção
-                </span>
-
-            </div>
-
-
         </section>
 
     </main>
 
 
     <!-- RODAPÉ -->
-
     <footer>
-
-        <p>
-            Sistema de Gestão de Estufa © 2026
-        </p>
-
+        <p>Sistema de Gestão de Estufa © 2026</p>
     </footer>
+
+    <!-- SCRIPT DE CONEXÃO COM A API FLASK -->
+    <script>
+        document.addEventListener("DOMContentLoaded", carregarDashboard);
+
+        async function carregarDashboard() {
+            try {
+                const resposta = await fetch('/estoque');
+                const resultado = await resposta.json();
+                
+                if (resultado.status === 'sucesso') {
+                    const lotes = resultado.estoque;
+
+                    // 1. Cálculos para os Cards de Métricas
+                    const totalLotes = lotes.length;
+                    const nomesUnicos = new Set(lotes.map(l => l.produto)).size;
+                    const totalQuantidade = lotes.reduce((acc, l) => acc + Number(l.quantidade), 0);
+                    const lotesEmRisco = lotes.filter(l => l.risco_perda);
+
+                    // 2. Atualizar HTML das Métricas
+                    document.getElementById("qtdHortalicas").innerText = nomesUnicos;
+                    document.getElementById("qtdLotes").innerText = totalLotes;
+                    document.getElementById("qtdTotal").innerText = totalQuantidade;
+                    document.getElementById("qtdRisco").innerText = lotesEmRisco.length;
+
+                    // 3. Renderizar Alertas Dinamicamente
+                    const containerAlertas = document.getElementById("listaAlertas");
+                    containerAlertas.innerHTML = "";
+
+                    if (lotesEmRisco.length === 0) {
+                        containerAlertas.innerHTML = "<p style='color: #2e7d32; font-weight: bold;'>Nenhum lote com risco de deterioração no momento!</p>";
+                        return;
+                    }
+
+                    lotesEmRisco.forEach(lote => {
+                        const item = document.createElement("div");
+                        item.className = "alerta-item";
+                        item.innerHTML = `
+                            <div>
+                                <strong>${lote.produto}</strong>
+                                <br>
+                                <span>Colhida há ${lote.dias_em_estoque} dia(s)</span>
+                            </div>
+                            <strong>Alto risco (Priorizar Venda)</strong>
+                        `;
+                        containerAlertas.appendChild(item);
+                    });
+                }
+            } catch (erro) {
+                console.error("Erro ao carregar dados do dashboard:", erro);
+            }
+        }
+    </script>
 
 </body>
 
