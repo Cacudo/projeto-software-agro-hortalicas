@@ -6,6 +6,8 @@ Produtos folhosos e vegetais possuem um ciclo de vida curto e estragam muito rá
 
 O objetivo deste sistema é gerenciar o cadastro das colheitas diárias, registrar os descartes/perdas por degradação e consolidar o balanço das vendas no varejo, garantindo controle financeiro e previsibilidade ao produtor rural.
 
+Essa gestão de estoque foi feito por MIguel R.
+
 ##  Integrantes da Equipe
 * Miguel Eduardo(@Cacudo)
 * Miguel Rodrigues (@usuarioGitHub2)
