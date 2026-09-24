@@ -2,70 +2,90 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Banco de dados temporário em memória (Lista de dicionários)
-registros = [
-    {
-        'id': 1,
-        'talhao': 'Talhão Norte 01',
-        'cultura': 'Soja',
-        'area_ha': 50.0,
-        'dosagem_l_ha': 2.5,
-        'volume_total': 125.0
-    }
-]
-proximo_id = 2
+# Lista em memória guardando os registos
+registos = []
+
+def calcular_metricas():
+    total_talhoes = len(registos)
+    total_area = sum(float(r['area']) for r in registos) if registos else 0
+    total_volume = sum(float(r['volume_total']) for r in registos) if registos else 0
+    return total_talhoes, round(total_area, 2), round(total_volume, 2)
 
 @app.route('/')
-def index():
-    return render_template('index.html', registros=registros)
+@app.route('/visao-geral')
+def visao_geral():
+    total_talhoes, total_area, total_volume = calcular_metricas()
+    return render_template(
+        'index.html',
+        registos=registos,
+        total_talhoes=total_talhoes,
+        total_area=total_area,
+        total_volume=total_volume,
+        secao_ativa='visao_geral'
+    )
 
-@app.route('/cadastrar', methods=['POST'])
-def cadastrar():
-    global proximo_id
+@app.route('/pulverizacao')
+def pulverizacao():
+    total_talhoes, total_area, total_volume = calcular_metricas()
+    return render_template(
+        'index.html',
+        registos=registos,
+        total_talhoes=total_talhoes,
+        total_area=total_area,
+        total_volume=total_volume,
+        secao_ativa='pulverizacao'
+    )
+
+@app.route('/relatorios')
+def relatorios():
+    total_talhoes, total_area, total_volume = calcular_metricas()
+    return render_template(
+        'index.html',
+        registos=registos,
+        total_talhoes=total_talhoes,
+        total_area=total_area,
+        total_volume=total_volume,
+        secao_ativa='relatorios'
+    )
+
+@app.route('/configuracoes')
+def configuracoes():
+    total_talhoes, total_area, total_volume = calcular_metricas()
+    return render_template(
+        'index.html',
+        registos=registos,
+        total_talhoes=total_talhoes,
+        total_area=total_area,
+        total_volume=total_volume,
+        secao_ativa='configuracoes'
+    )
+
+@app.route('/add', methods=['POST'])
+def add():
     talhao = request.form.get('talhao')
     cultura = request.form.get('cultura')
-    area_ha = float(request.form.get('area_ha'))
-    dosagem_l_ha = float(request.form.get('dosagem_l_ha'))
-    
-    # Regra de negócio / Cálculo matemático do Agro
-    volume_total = area_ha * dosagem_l_ha
+    area = float(request.form.get('area', 0))
+    dosagem = float(request.form.get('dosagem', 0))
+    volume_total = area * dosagem
 
-    novo_registro = {
-        'id': proximo_id,
+    novo_id = (registos[-1]['id'] + 1) if registos else 1
+
+    registos.append({
+        'id': novo_id,
         'talhao': talhao,
         'cultura': cultura,
-        'area_ha': area_ha,
-        'dosagem_l_ha': dosagem_l_ha,
+        'area': area,
+        'dosagem': dosagem,
         'volume_total': round(volume_total, 2)
-    }
-    
-    registros.append(novo_registro)
-    proximo_id += 1
-    return redirect(url_for('index'))
+    })
 
-@app.route('/editar/<int:id>', methods=['GET', 'POST'])
-def editar(id):
-    registro = next((r for r in registros if r['id'] == id), None)
-    if not registro:
-        return redirect(url_for('index'))
-
-    if request.method == 'POST':
-        registro['talhao'] = request.form.get('talhao')
-        registro['cultura'] = request.form.get('cultura')
-        registro['area_ha'] = float(request.form.get('area_ha'))
-        registro['dosagem_l_ha'] = float(request.form.get('dosagem_l_ha'))
-        
-        # Recálculo
-        registro['volume_total'] = round(registro['area_ha'] * registro['dosagem_l_ha'], 2)
-        return redirect(url_for('index'))
-
-    return render_template('editar.html', registro=registro)
+    return redirect(url_for('visao_geral'))
 
 @app.route('/deletar/<int:id>')
 def deletar(id):
-    global registros
-    registros = [r for r in registros if r['id'] != id]
-    return redirect(url_for('index'))
+    global registos
+    registos = [r for r in registos if r['id'] != id]
+    return redirect(url_for('visao_geral'))
 
 if __name__ == '__main__':
     app.run(debug=True)
